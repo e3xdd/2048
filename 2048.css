@@ -38,3 +38,24 @@ header p {
     font-family: Arial;
     font-size: 25px;
 }
+
+#grid-container {
+    position: relative;
+
+    width: 460px;
+    height: 460px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 10px;
+
+    background-color: #bbada0;
+}
+
+.grid-cell {
+    position: absolute;
+
+    width: 100px;
+    height: 100px;
+    border-radius: 6px;
+    background-color: #ccc0b3;
+}
