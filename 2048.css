@@ -1,0 +1,40 @@
+header {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+header h1 {
+    margin: 10px auto;
+    font-family: Arial;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+header #newgamebutton {
+    display: block;
+
+    width: 100px;
+    margin: 10px auto;
+    padding: 10px 10px;
+    border-radius: 10px;
+
+    background-color: #8f7a66;
+
+    font-family: Arial;
+    color: white;
+    text-decoration: none;
+}
+
+/*鼠标移动上 newgame 颜色变化*/
+header #newgamebutton:hover {
+    background-color: #9f8b77;
+}
+
+header p {
+    margin: 10px auto;
+
+    font-family: Arial;
+    font-size: 25px;
+}
