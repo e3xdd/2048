@@ -1,10 +1,93 @@
 // 游戏的主逻辑
 var board = new Array()
 var score = 0
+var hasConflicted = new Array()
 
-$(documen).ready(function(){
+var startx = 0
+var starty = 0
+var endx = 0
+var endy = 0
+
+$(document).ready(function(){
+    // 移动端适配
+    prepareForMobile()
     newgame()
 })
+
+var prepareForMobile = function() {
+    if (documentWidth > 500) {
+    gridContainerWidth = 500
+    cellSideLength = 100
+    cellSpace = 20
+    }
+    //阻止页面滑动
+    document.ontouchmove = function(event) {
+        if (!event.elementIsEnabled) {
+            event.preventDefault()
+        }
+    }
+    //监听touchstart
+    document.addEventListener('touchstart', function(event){
+        // event.preventDefault()
+        startX = event.touches[0].pageX
+        startY = event.touches[0].pageY
+        // console.log(startx);
+    })
+    //监听touchend
+    document.addEventListener('touchend', function(event){
+        // event.preventDefault()
+        endX = event.changedTouches[0].pageX
+        endY = event.changedTouches[0].pageY
+        var deltaX = endX - startX
+        var deltaY = endY - startY
+        //容错
+        if (Math.abs(deltaX) < documentWidth * 0.1 && Math.abs(deltaY) < documentWidth * 0.1) {
+            return
+        }
+        //滑动操作
+        if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+            if (deltaX > 0) {
+                //right
+                if (moveRight()) {
+                    setTimeout("generateOneNumber()", 210)
+                    setTimeout("isGameOver()", 300)
+                }
+            } else {
+                //left
+                if (moveLeft()) {
+                    setTimeout("generateOneNumber()", 210)
+                    setTimeout("isGameOver()", 300)
+                }
+            }
+        } else {
+            if (deltaY > 0) {
+                //down
+                if (moveDown()) {
+                    setTimeout("generateOneNumber()", 210)
+                    setTimeout("isGameOver()", 300)
+                }
+            } else {
+                //up
+                if (moveUp()) {
+                    setTimeout("generateOneNumber()", 210)
+                    setTimeout("isGameOver()", 300)
+                }
+            }
+        }
+        // console.log(endx);
+    })
+
+    $('header').css('height', documentHeight * 0.15)
+    // .css() 方法设置选定元素的 css
+    $('#grid-container').css('width', gridContainerWidth - cellSpace * 2)
+    $('#grid-container').css('height', gridContainerWidth -  cellSpace * 2)
+    $('#grid-container').css('padding', cellSpace)
+    $('#grid-container').css('border-radius', gridContainerWidth * 0.02)
+
+    $('.grid-cell').css('width', cellSideLength)
+    $('.grid-cell').css('height', cellSideLength)
+    $('.grid-cell').css('border-radius', cellSideLength * 0.05)
+}
 
 var newgame = function() {
     // 初始化棋盘
@@ -15,18 +98,23 @@ var newgame = function() {
 }
 
 var init = function() {
+    score = 0
+    // 界面初始化
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; i++) {
             var gridCell = $("#grid-cell-" + i + "-" + j)
+            // getPosTop 根据 i j 算出每一个格子的 top left 值
             gridCell.css('top', getPosTop(i, j))
             gridCell.css('left', getPosLeft(i, j))
         }
     }
-
+    // 数据初始化
     for (var i = 0; i < 4; i++) {
         board[i] = new Array()
+        hasConflicted[i] = new Array()
         for (var j = 0; j < 4; j++) {
             board[i][j] = 0
+            hasConflicted[i][j] = false
         }
     }
     // 根据 board 的值动态的更新前端的表现
@@ -34,6 +122,7 @@ var init = function() {
 }
 
 var updateBoardView = function() {
+    updateScore(score)
     $(".number-cell").remove()
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; j++) {
@@ -54,42 +143,48 @@ var updateBoardView = function() {
                 theNemberCell.css('background-color', getNumberBackgroundColor(board[i][j]))
                 theNemberCell.css('color', getNumberColor(board[i][j]))
             }
+            hasConflicted[i][j] = false
+        }
+    }
+    $('.number-cell').css('line-height', cellSideLength + 'px')
+    $('.number-cell').css('border-radius', cellSideLength * 0.05)
 }
 
 // 绑定键盘上下左右事件
 $(document).keydown(function(event){
+    // 阻止按键默认效果
+    event.preventDefault()
     switch (event.keyCode) {
         case 37:
             if (moveLeft()) {
-                generateOneNumber()
-                isGameOver()
+                setTimeout("generateOneNumber()", 210)
+                setTimeout("isGameOver()", 300)
             }
             // console.log('left')
             break
         case 38:
             if (moveUp()) {
-                generateOneNumber()
-                isGameOver()
+                setTimeout("generateOneNumber()", 210)
+                setTimeout("isGameOver()", 300)
             }
             // console.log('up')
             break
         case 39:
             if (moveRight()) {
-                generateOneNumber()
-                isGameOver()
+                setTimeout("generateOneNumber()", 210)
+                setTimeout("isGameOver()", 300)
             }
             // console.log('right')
             break
         case 40:
             if (moveDown()) {
-                generateOneNumber()
-                isGameOver()
+                setTimeout("generateOneNumber()", 210)
+                setTimeout("isGameOver()", 300)
             }
             // console.log('down')
             break
     }
 })
-
 
 var generateOneNumber = function() {
     if(noSpace(board)) {
@@ -98,12 +193,24 @@ var generateOneNumber = function() {
     // 随机一个位置 0~4
     var randx = parseInt(Math.floor(Math.random() * 4))
     var randy = parseInt(Math.floor(Math.random() * 4))
-    while (true) {
+    var times = 0
+    while (times <　50) {
         if (board[randx][randy] === 0) {
             break
         }
         var randx = parseInt(Math.floor(Math.random() * 4))
         var randy = parseInt(Math.floor(Math.random() * 4))
+        times++
+    }
+    if(times === 50) {
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 4; i++) {
+                if(board[i][j] === 0) {
+                    randx = i
+                    randy = j
+                }
+            }
+        }
     }
     // 随机一个数字
     var randNumber = Math.random() < 0.5 ? 2 : 4
@@ -113,8 +220,6 @@ var generateOneNumber = function() {
     // 前端动态显示该数字
     showNumberWithAnimation(randx, randy, randNumber)
     // console.log('generateOneNumber');
-    // 在随机位置显示该数字
-
     return true
 }
 
@@ -240,5 +345,11 @@ var moveDown = function() {
 }
 
 var isGameOver = function() {
+    if (noSpace(board) && noMove(board)) {
+        gameOver()
+    }
+}
 
+var gameOver = function() {
+    alert('gameOver!')
 }

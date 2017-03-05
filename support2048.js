@@ -21,6 +21,16 @@ var getNumberColor = function(number) {
     return 'white'
 }
 
+var getNumberSize = function(number) {
+    if (number > 512) {
+        return cellSideLength * 0.4 + 'px'
+    } else if (number === 512) {
+        return cellSideLength * 0.5 + 'px'
+    } else {
+        return cellSideLength * 0.6 + 'px'
+    }
+}
+
 // number-cell 的背景色
 var getNumberBackgroundColor = function(number) {
     var color = {
@@ -128,6 +138,14 @@ var noBlockVertical = function(col, row1, row2, board) {
         if (board[i][col] !== 0) {
             return false
         }
+    }
+    return true
+}
+
+//
+var noMove = function(board) {
+    if (canMoveLeft(board) || canMoveRight(board) || canMoveUp(board) || canMoveDown(board)) {
+        return false
     }
     return true
 }

@@ -23,3 +23,7 @@ var showMoveAnimation = function(fromx, fromy, tox, toy) {
         left: getPosLeft(tox, toy)
     }, 200)
 }
+
+var updateScore = function(score) {
+    $(".score").text(score)
+}
