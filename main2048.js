@@ -9,6 +9,9 @@ $(documen).ready(function(){
 var newgame = function() {
     // 初始化棋盘
     init()
+    // 在随机两个格子中生成数字
+    generateOneNumber()
+    generateOneNumber()
 }
 
 var init = function() {
@@ -51,4 +54,31 @@ var updateBoardView = function() {
                 theNemberCell.css('background-color', getNumberBackgroundColor(board[i][j]))
                 theNemberCell.css('color', getNumberColor(board[i][j]))
             }
+}
+
+var generateOneNumber = function() {
+    if(noSpace(board)) {
+        return false
+    }
+    // 随机一个位置 0~4
+    var randx = parseInt(Math.floor(Math.random() * 4))
+    var randy = parseInt(Math.floor(Math.random() * 4))
+    while (true) {
+        if (board[randx][randy] === 0) {
+            break
+        }
+        var randx = parseInt(Math.floor(Math.random() * 4))
+        var randy = parseInt(Math.floor(Math.random() * 4))
+    }
+    // 随机一个数字
+    var randNumber = Math.random() < 0.5 ? 2 : 4
+    // console.log('randNumber :', randNumber);
+    // 在随机位置显示该数字
+    board[randx][randy] = randNumber
+    // 前端动态显示该数字
+    showNumberWithAnimation(randx, randy, randNumber)
+    // console.log('generateOneNumber');
+    // 在随机位置显示该数字
+
+    return true
 }

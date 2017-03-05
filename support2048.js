@@ -40,3 +40,15 @@ var getNumberBackgroundColor = function(number) {
     }
     return color[number]
 }
+
+// noSpace 空间是否可以再生成一个数字
+var noSpace = function (board) {
+    for (var i = 0; i < 4; i++) {
+        for (var j = 0; j < 4; j++) {
+            if (board[i][j] === 0) {
+                return false
+            }
+        }
+    }
+    return true
+}
