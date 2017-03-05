@@ -56,6 +56,41 @@ var updateBoardView = function() {
             }
 }
 
+// 绑定键盘上下左右事件
+$(document).keydown(function(event){
+    switch (event.keyCode) {
+        case 37:
+            if (moveLeft()) {
+                generateOneNumber()
+                isGameOver()
+            }
+            // console.log('left')
+            break
+        case 38:
+            if (moveUp()) {
+                generateOneNumber()
+                isGameOver()
+            }
+            // console.log('up')
+            break
+        case 39:
+            if (moveRight()) {
+                generateOneNumber()
+                isGameOver()
+            }
+            // console.log('right')
+            break
+        case 40:
+            if (moveDown()) {
+                generateOneNumber()
+                isGameOver()
+            }
+            // console.log('down')
+            break
+    }
+})
+
+
 var generateOneNumber = function() {
     if(noSpace(board)) {
         return false
