@@ -144,6 +144,7 @@ var moveLeft = function() {
             }
         }
     }
+    // 等待 200 ms,让动画播放完全
     setTimeout("updateBoardView()", 200)
     return true
 }
@@ -236,4 +237,8 @@ var moveDown = function() {
     }
     setTimeout("updateBoardView()", 200)
     return true
+}
+
+var isGameOver = function() {
+
 }
