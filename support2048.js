@@ -113,6 +113,7 @@ var canMoveDown = function(board) {
 }
 
 // 判断移动过程中是否有障碍物
+// 第 row 行 第 col1 列 到 第 col2 列 元素判断
 var noBlockHorizontal = function(row, col1, col2, board) {
     for (var i = col1 + 1; i < col2; i++) {
         if (board[row][i] !== 0) {
