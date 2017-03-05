@@ -52,3 +52,82 @@ var noSpace = function (board) {
     }
     return true
 }
+
+var noMove = function(board) {
+    if (canMoveLeft(board) || canMoveRight(board) || canMoveUp(board) || canMoveDown(board)) {
+        return false
+    }
+    return true
+}
+
+var canMoveLeft = function(board) {
+    for (var i = 0; i < 4; i++) {
+        for (var j = 1; j < 4; j++) {
+            if (board[i][j] !== 0) {
+                if (board[i][j-1] === 0 || board[i][j-1] === board[i][j]) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
+}
+
+var canMoveRight = function(board) {
+    for (var i = 0; i < 4; i++) {
+        for (var j = 2; j >= 0; j--) {
+            if (board[i][j] !== 0) {
+                if (board[i][j+1] === 0 || board[i][j+1] === board[i][j]) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
+}
+
+var canMoveUp = function(board) {
+    for (var j = 0; j < 4; j++) {
+        for (var i = 1; i < 4; i++) {
+            if (board[i][j] !== 0) {
+                if (board[i-1][j] === 0 || board[i-1][j] === board[i][j]) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
+}
+
+var canMoveDown = function(board) {
+    for (var j = 0; j < 4; j++) {
+        for (var i = 2; i >= 0; i--) {
+            if (board[i][j] !== 0) {
+                if (board[i+1][j] === 0 || board[i+1][j] === board[i][j]) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
+}
+
+// 判断移动过程中是否有障碍物
+var noBlockHorizontal = function(row, col1, col2, board) {
+    for (var i = col1 + 1; i < col2; i++) {
+        if (board[row][i] !== 0) {
+            return false
+        }
+    }
+    return true
+}
+
+// 判断移动过程中是否有障碍物
+var noBlockVertical = function(col, row1, row2, board) {
+    for (var i = row1 + 1; i < row2; i++) {
+        if (board[i][col] !== 0) {
+            return false
+        }
+    }
+    return true
+}
