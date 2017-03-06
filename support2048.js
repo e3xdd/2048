@@ -141,11 +141,3 @@ var noBlockVertical = function(col, row1, row2, board) {
     }
     return true
 }
-
-//
-var noMove = function(board) {
-    if (canMoveLeft(board) || canMoveRight(board) || canMoveUp(board) || canMoveDown(board)) {
-        return false
-    }
-    return true
-}

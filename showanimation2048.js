@@ -25,5 +25,6 @@ var showMoveAnimation = function(fromx, fromy, tox, toy) {
 }
 
 var updateScore = function(score) {
+    // TODO: 添加分数动画
     $(".score").text(score)
 }

@@ -11,6 +11,7 @@ var endy = 0
 $(document).ready(function(){
     // 移动端适配
     prepareForMobile()
+    // 开始游戏
     newgame()
 })
 
@@ -19,6 +20,7 @@ var prepareForMobile = function() {
     gridContainerWidth = 500
     cellSideLength = 100
     cellSpace = 20
+    return
     }
     //阻止页面滑动
     document.ontouchmove = function(event) {
@@ -102,7 +104,7 @@ var init = function() {
     // 界面初始化
     for (var i = 0; i < 4; i++) {
         for (var j = 0; j < 4; i++) {
-            var gridCell = $("#grid-cell-" + i + "-" + j)
+            var gridCell = $(`#grid-cell-${i}-${j}`)
             // getPosTop 根据 i j 算出每一个格子的 top left 值
             gridCell.css('top', getPosTop(i, j))
             gridCell.css('left', getPosLeft(i, j))
@@ -161,28 +163,28 @@ $(document).keydown(function(event){
                 setTimeout("isGameOver()", 300)
             }
             // console.log('left')
-            break
+            break;
         case 38:
             if (moveUp()) {
                 setTimeout("generateOneNumber()", 210)
                 setTimeout("isGameOver()", 300)
             }
             // console.log('up')
-            break
+            break;
         case 39:
             if (moveRight()) {
                 setTimeout("generateOneNumber()", 210)
                 setTimeout("isGameOver()", 300)
             }
             // console.log('right')
-            break
+            break;
         case 40:
             if (moveDown()) {
                 setTimeout("generateOneNumber()", 210)
                 setTimeout("isGameOver()", 300)
             }
             // console.log('down')
-            break
+            break;
     }
 })
 
@@ -196,7 +198,7 @@ var generateOneNumber = function() {
     var times = 0
     while (times <　50) {
         if (board[randx][randy] === 0) {
-            break
+            break;
         }
         var randx = parseInt(Math.floor(Math.random() * 4))
         var randy = parseInt(Math.floor(Math.random() * 4))
