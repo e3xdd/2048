@@ -103,7 +103,7 @@ var init = function() {
     score = 0
     // 界面初始化
     for (var i = 0; i < 4; i++) {
-        for (var j = 0; j < 4; i++) {
+        for (var j = 0; j < 4; j++) {
             var gridCell = $(`#grid-cell-${i}-${j}`)
             // getPosTop 根据 i j 算出每一个格子的 top left 值
             gridCell.css('top', getPosTop(i, j))
