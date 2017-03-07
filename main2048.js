@@ -12,7 +12,7 @@ $(document).ready(function(){
     // 移动端适配
     prepareForMobile()
     // 开始游戏
-    newgame()
+    newGame()
 })
 
 var prepareForMobile = function() {
@@ -91,7 +91,7 @@ var prepareForMobile = function() {
     $('.grid-cell').css('border-radius', cellSideLength * 0.05)
 }
 
-var newgame = function() {
+var newGame = function() {
     // 初始化棋盘
     init()
     // 在随机两个格子中生成数字
